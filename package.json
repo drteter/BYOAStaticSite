@@ -1,0 +1,19 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "description": "## Plan",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "http-server public",
+    "dev": "npm run build && npm run serve"
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "fs-extra": "^11.3.0",
+    "marked": "^15.0.6"
+  }
+}
