@@ -1,0 +1,308 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    margin: 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 4rem 0 6rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.gradient-text {
+    font-size: 3.5rem;
+    margin: 0.5rem 0 2rem;
+    background: linear-gradient(90deg, #0066ff 0%, #00ccff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    color: #444;
+}
+
+.highlight {
+    color: #0066ff;
+    font-weight: 500;
+}
+
+.cta-button {
+    background: #1a2b49;
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 2rem 0;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.achievements-section {
+    text-align: center;
+    padding: 4rem 0;
+    background: #f8f9fa;
+    margin: 4rem -20px;
+    padding: 4rem 20px;
+}
+
+.achievements-section h2 {
+    font-size: 2.5rem;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.testimonials-section {
+    padding: 4rem 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.testimonials-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.testimonial {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.stars {
+    color: #ffd700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial p {
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.author {
+    margin-top: 1.5rem;
+    color: #666;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.recent-posts {
+    margin-top: 2rem;
+}
+
+.recent-posts ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recent-posts li {
+    margin: 1rem 0;
+}
+
+.recent-posts a {
+    color: #0066ff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.recent-posts a:hover {
+    text-decoration: underline;
+}
+
+.testimonial p {
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.blog-post {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.blog-post article {
+    line-height: 1.8;
+}
+
+.blog-post h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.blog-post time {
+    color: #666;
+    display: block;
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+.blog-post h2 {
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    color: #444;
+}
+
+.blog-post p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.blog-index {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.blog-index h1 {
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.blog-preview {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.blog-preview h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.blog-preview h2 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.blog-preview h2 a:hover {
+    color: #0066ff;
+}
+
+.blog-preview time {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+main h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+main p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.8;
+}
+
+footer {
+    max-width: 800px;
+    margin: 4rem auto 2rem;
+    padding: 2rem;
+    border-top: 1px solid #eee;
+    text-align: center;
+    color: #666;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.blog-footer {
+    max-width: 800px;
+    margin: 4rem auto 2rem;
+    padding: 2rem;
+    border-top: 1px solid #eee;
+    color: #666;
+}
+
+.blog-footer .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.blog-footer .post-nav a {
+    color: #0066ff;
+    text-decoration: none;
+}
+
+.blog-footer .post-nav a:hover {
+    text-decoration: underline;
+}
+
+.blog-footer .copyright {
+    text-align: center;
+    font-size: 1rem;
+    margin: 0;
+}
