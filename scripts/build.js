@@ -3,10 +3,6 @@ const path = require('path');
 const { marked } = require('marked');
 const frontMatter = require('front-matter');
 
-// Read the markdown file
-const markdownPath = 'src/content/pages/index.md';
-const outputPath = 'public/index.html';
-
 // Simple HTML template
 const template = `
 <!DOCTYPE html>
@@ -18,12 +14,26 @@ const template = `
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    {{content}}
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/blog">Blog</a>
+        <a href="/contact.html">Contact</a>
+    </nav>
+    <main>
+        {{content}}
+    </main>
+    <footer>
+        <p>&copy; 2024</p>
+    </footer>
 </body>
 </html>
 `;
 
-async function buildPage() {
+async function buildPage(markdownFile) {
+    const markdownPath = path.join('src/content/pages', markdownFile);
+    const outputPath = path.join('public', markdownFile.replace('.md', '.html'));
+    
     // Read markdown file
     const markdown = await fs.readFile(markdownPath, 'utf-8');
     
@@ -47,4 +57,15 @@ async function buildPage() {
     console.log(`Built ${outputPath}`);
 }
 
-buildPage().catch(console.error); 
+async function buildSite() {
+    // Get all markdown files
+    const files = await fs.readdir('src/content/pages');
+    const markdownFiles = files.filter(file => file.endsWith('.md'));
+    
+    // Build each page
+    for (const file of markdownFiles) {
+        await buildPage(file);
+    }
+}
+
+buildSite().catch(console.error); 
