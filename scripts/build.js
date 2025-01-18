@@ -15,17 +15,20 @@ function createTemplate(title, content) {
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/blog">Blog</a>
-        <a href="/contact.html">Contact</a>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Site Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/contact.html">Contact</a>
+        </div>
     </nav>
     <main>
         ${content}
     </main>
-    <footer>
-        <p>&copy; 2024</p>
-    </footer>
+    ${createFooterTemplate()}
 </body>
 </html>`;
 }
@@ -48,10 +51,15 @@ function createBlogTemplate(title, date, content) {
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/blog">Blog</a>
-        <a href="/contact.html">Contact</a>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Site Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/contact.html">Contact</a>
+        </div>
     </nav>
     <main class="blog-post">
         <article>
@@ -60,9 +68,7 @@ function createBlogTemplate(title, date, content) {
             ${content}
         </article>
     </main>
-    <footer>
-        <p>&copy; 2024</p>
-    </footer>
+    ${createBlogFooterTemplate()}
 </body>
 </html>`;
 }
@@ -85,10 +91,15 @@ function createBlogIndexTemplate(posts) {
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
-        <a href="/about.html">About</a>
-        <a href="/blog">Blog</a>
-        <a href="/contact.html">Contact</a>
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Site Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/contact.html">Contact</a>
+        </div>
     </nav>
     <main class="blog-index">
         <h1>Blog Posts</h1>
@@ -177,10 +188,14 @@ async function buildIndexPage() {
 }
 
 async function copyAssets() {
-    // Ensure the public/styles directory exists
+    // Copy CSS
     await fs.ensureDir('public/styles');
-    // Copy the CSS file
     await fs.copy('src/styles/main.css', 'public/styles/main.css');
+    
+    // Copy images
+    await fs.ensureDir('public/images');
+    await fs.copy('src/images', 'public/images');
+    
     console.log('Copied assets to public directory');
 }
 
@@ -191,9 +206,12 @@ async function buildSite() {
     // Copy assets
     await copyAssets();
     
+    // Build the index page first
+    await buildIndexPage();
+    
     // Build regular pages
     const pageFiles = await fs.readdir('src/content/pages');
-    const markdownPages = pageFiles.filter(file => file.endsWith('.md'));
+    const markdownPages = pageFiles.filter(file => file.endsWith('.md') && file !== 'index.md');
     
     for (const file of markdownPages) {
         await buildPage(file);
@@ -248,6 +266,25 @@ async function buildBlogIndex(posts) {
     await fs.writeFile(outputPath, html);
     
     console.log('Built blog index page');
+}
+
+// Regular page footer template
+function createFooterTemplate() {
+    return `
+    <footer>
+        <p>&copy; 2024 Your Name. All rights reserved.</p>
+    </footer>`;
+}
+
+// Blog footer template
+function createBlogFooterTemplate() {
+    return `
+    <footer class="blog-footer">
+        <div class="post-nav">
+            <a href="/blog">← Back to Blog</a>
+        </div>
+        <p class="copyright">&copy; 2024 Your Name. All rights reserved.</p>
+    </footer>`;
 }
 
 buildSite().catch(console.error); 

@@ -8,14 +8,28 @@ body {
 
 nav {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 60px;
     padding: 1rem 0;
     border-bottom: 1px solid #eee;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-nav a {
-    margin: 0 20px;
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    margin: 0;
     text-decoration: none;
     color: #333;
     font-size: 1.1rem;
@@ -229,4 +243,66 @@ nav a:hover {
 .blog-preview time {
     color: #666;
     font-size: 1.1rem;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+main h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+main p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.8;
+}
+
+footer {
+    max-width: 800px;
+    margin: 4rem auto 2rem;
+    padding: 2rem;
+    border-top: 1px solid #eee;
+    text-align: center;
+    color: #666;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.blog-footer {
+    max-width: 800px;
+    margin: 4rem auto 2rem;
+    padding: 2rem;
+    border-top: 1px solid #eee;
+    color: #666;
+}
+
+.blog-footer .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.blog-footer .post-nav a {
+    color: #0066ff;
+    text-decoration: none;
+}
+
+.blog-footer .post-nav a:hover {
+    text-decoration: underline;
+}
+
+.blog-footer .copyright {
+    text-align: center;
+    font-size: 1rem;
+    margin: 0;
 }
