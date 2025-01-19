@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node scripts/build.js",
     "serve": "http-server public",
-    "dev": "npm run build && npm run serve"
+    "dev": "npm run build && npm run serve",
+    "deploy": "cross-env NODE_ENV=production npm run build && gh-pages -d public"
   },
   "main": "index.js",
   "keywords": [],
@@ -15,5 +16,10 @@
     "front-matter": "^4.0.2",
     "fs-extra": "^11.3.0",
     "marked": "^15.0.6"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.3.0",
+    "http-server": "^14.1.1"
   }
 }

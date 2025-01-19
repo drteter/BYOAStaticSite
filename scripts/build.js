@@ -3,6 +3,8 @@ const path = require('path');
 const { marked } = require('marked');
 const frontMatter = require('front-matter');
 
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/BYOAStaticSite' : '';
+
 // Base template function
 function createTemplate(title, content) {
     return `<!DOCTYPE html>
@@ -11,30 +13,30 @@ function createTemplate(title, content) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="${BASE_URL}/styles/main.css">
 </head>
 <body>
     <nav>
-        <a href="/" class="logo">
-            <img src="/images/logo.png" alt="Site Logo">
+        <a href="${BASE_URL}/" class="logo">
+            <img src="${BASE_URL}/images/logo.png" alt="Site Logo">
         </a>
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/about.html">About</a>
-            <a href="/blog">Blog</a>
-            <a href="/contact.html">Contact</a>
+            <a href="${BASE_URL}/">Home</a>
+            <a href="${BASE_URL}/about.html">About</a>
+            <a href="${BASE_URL}/blog">Blog</a>
+            <a href="${BASE_URL}/contact.html">Contact</a>
         </div>
     </nav>
     <main>
         ${content}
     </main>
+    ${createMailchimpForm()}
     ${createFooterTemplate()}
 </body>
 </html>`;
 }
 
 function createBlogTemplate(title, date, content) {
-    // Format the date nicely
     const formattedDate = new Date(date).toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
@@ -47,18 +49,18 @@ function createBlogTemplate(title, date, content) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="${BASE_URL}/styles/main.css">
 </head>
 <body>
     <nav>
-        <a href="/" class="logo">
-            <img src="/images/logo.png" alt="Site Logo">
+        <a href="${BASE_URL}/" class="logo">
+            <img src="${BASE_URL}/images/logo.png" alt="Site Logo">
         </a>
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/about.html">About</a>
-            <a href="/blog">Blog</a>
-            <a href="/contact.html">Contact</a>
+            <a href="${BASE_URL}/">Home</a>
+            <a href="${BASE_URL}/about.html">About</a>
+            <a href="${BASE_URL}/blog">Blog</a>
+            <a href="${BASE_URL}/contact.html">Contact</a>
         </div>
     </nav>
     <main class="blog-post">
@@ -68,7 +70,13 @@ function createBlogTemplate(title, date, content) {
             ${content}
         </article>
     </main>
-    ${createBlogFooterTemplate()}
+    ${createMailchimpForm()}
+    <footer class="blog-footer">
+        <div class="post-nav">
+            <a href="${BASE_URL}/blog">← Back to Blog</a>
+        </div>
+        <p class="copyright">&copy; 2024 Your Name. All rights reserved.</p>
+    </footer>
 </body>
 </html>`;
 }
@@ -76,7 +84,7 @@ function createBlogTemplate(title, date, content) {
 function createBlogIndexTemplate(posts) {
     const postsList = posts.map(post => `
         <article class="blog-preview">
-            <h2><a href="/blog/${post.slug}.html">${post.title}</a></h2>
+            <h2><a href="${BASE_URL}/blog/${post.slug}.html">${post.title}</a></h2>
             <time>${post.date}</time>
         </article>
     `).join('');
@@ -87,18 +95,18 @@ function createBlogIndexTemplate(posts) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Posts</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="${BASE_URL}/styles/main.css">
 </head>
 <body>
     <nav>
-        <a href="/" class="logo">
-            <img src="/images/logo.png" alt="Site Logo">
+        <a href="${BASE_URL}/" class="logo">
+            <img src="${BASE_URL}/images/logo.png" alt="Site Logo">
         </a>
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/about.html">About</a>
-            <a href="/blog">Blog</a>
-            <a href="/contact.html">Contact</a>
+            <a href="${BASE_URL}/">Home</a>
+            <a href="${BASE_URL}/about.html">About</a>
+            <a href="${BASE_URL}/blog">Blog</a>
+            <a href="${BASE_URL}/contact.html">Contact</a>
         </div>
     </nav>
     <main class="blog-index">
@@ -107,8 +115,9 @@ function createBlogIndexTemplate(posts) {
             ${postsList}
         </div>
     </main>
+    ${createMailchimpForm()}
     <footer>
-        <p>&copy; 2024</p>
+        <p>&copy; 2024 Your Name. All rights reserved.</p>
     </footer>
 </body>
 </html>`;
@@ -140,8 +149,8 @@ async function buildPage(markdownFile) {
 async function buildIndexPage() {
     const indexContent = `
         <div class="hero-section">
-            <h1>Welcome to the</h1>
-            <h2 class="gradient-text">My Personal Website</h2>
+            <h1>Welcome to</h1>
+            <h2 class="gradient-text">David's Digital Garden </h2>
             
             <div class="hero-description">
                 <p>I've condensed <span class="highlight">10+ years of experience</span> into 
@@ -159,8 +168,8 @@ async function buildIndexPage() {
             <div class="recent-posts">
                 <h3>Recent Posts</h3>
                 <ul>
-                    <li><a href="/blog/first-post.html">First Blog Post</a></li>
-                    <li><a href="/blog/another-post.html">Another Post</a></li>
+                    <li><a href="${BASE_URL}/blog/first-post.html">First Blog Post</a></li>
+                    <li><a href="${BASE_URL}/blog/another-post.html">Another Post</a></li>
                 </ul>
             </div>
         </div>
@@ -194,7 +203,12 @@ async function copyAssets() {
     
     // Copy images
     await fs.ensureDir('public/images');
-    await fs.copy('src/images', 'public/images');
+    try {
+        await fs.copy('src/images/logo.png', 'public/images/logo.png');
+        console.log('Copied logo.png');
+    } catch (error) {
+        console.warn('Warning: logo.png not found in src/images/');
+    }
     
     console.log('Copied assets to public directory');
 }
@@ -276,15 +290,28 @@ function createFooterTemplate() {
     </footer>`;
 }
 
-// Blog footer template
-function createBlogFooterTemplate() {
+function createMailchimpForm() {
     return `
-    <footer class="blog-footer">
-        <div class="post-nav">
-            <a href="/blog">← Back to Blog</a>
+    <div class="signup-section">
+        <div class="signup-form">
+            <h3>Every subscriber gets free nachos</h3>
+            <p>Delivered to your inbox with a minimum of fuss</p>
+            <form action="https://davidteter.us7.list-manage.com/subscribe/post?u=6e16ad42fd11f5d55be466d17&amp;id=4bd3921eac&amp;f_id=007c41e4f0" 
+                  method="post" 
+                  id="mc-embedded-subscribe-form" 
+                  name="mc-embedded-subscribe-form" 
+                  class="validate" 
+                  target="_blank">
+                <div class="form-group">
+                    <input type="email" name="EMAIL" placeholder="Your email address" required>
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                        <input type="text" name="b_6e16ad42fd11f5d55be466d17_4bd3921eac" tabindex="-1" value="">
+                    </div>
+                    <button type="submit" name="subscribe" class="cta-button">Subscribe</button>
+                </div>
+            </form>
         </div>
-        <p class="copyright">&copy; 2024 Your Name. All rights reserved.</p>
-    </footer>`;
+    </div>`;
 }
 
 buildSite().catch(console.error); 
